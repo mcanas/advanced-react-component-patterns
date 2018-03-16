@@ -1,8 +1,24 @@
 import React, { Component } from "react"
 import Switch from "./Switch"
 
+const ToggleOn = ({ on, children }) => {
+  return on ? children : null
+}
+
+const ToggleOff = ({ on, children }) => {
+  return on ? null : children
+}
+
+const ToggleButton = ({ on, toggle, ...props }) => {
+  return <Switch on={on} onClick={toggle} {...props} />
+}
+
 class Toggle extends Component {
   static defaultProps = { onToggle: () => undefined }
+
+  static On = ToggleOn
+  static Off = ToggleOff
+  static Button = ToggleButton
 
   state = { on: false }
 
@@ -16,8 +32,14 @@ class Toggle extends Component {
   }
 
   render() {
-    const { on } = this.state
-    return <Switch on={on} onClick={this.toggle} />
+    const children = React.Children.map(this.props.children, child =>
+      React.cloneElement(child, {
+        on: this.state.on,
+        toggle: this.toggle
+      })
+    )
+
+    return <div>{children}</div>
   }
 }
 
