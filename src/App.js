@@ -1,9 +1,7 @@
-import React from "react"
+import React, { Component } from "react"
 import Toggle, { withToggle } from "./Toggle"
+import MyToggle from "./MyToggle"
 
-const MyToggle = ({ toggle: { on, toggle } }) => (
-  <button onClick={toggle}>{on ? "on" : "off"}</button>
-)
 const MyToggleWrapper = withToggle(MyToggle)
 
 const MyEventComponent = ({ toggle, on, event }) => {
@@ -12,16 +10,20 @@ const MyEventComponent = ({ toggle, on, event }) => {
 }
 const MyEventComponentWrapper = withToggle(MyEventComponent)
 
-const App = () => (
-  <Toggle onToggle={on => console.log("toggle", on)}>
-    <Toggle.On>The button is on</Toggle.On>
-    <Toggle.Off>The button is off</Toggle.Off>
-    <Toggle.Button />
-    <hr />
-    <MyToggleWrapper />
-    <hr />
-    <MyEventComponentWrapper event="onClick" on={e => alert(e.type)} />
-  </Toggle>
-)
+class App extends Component {
+  render() {
+    return (
+      <Toggle onToggle={on => (on ? this.myToggle.focus() : null)}>
+        <Toggle.On>The button is on</Toggle.On>
+        <Toggle.Off>The button is off</Toggle.Off>
+        <Toggle.Button />
+        <hr />
+        <MyToggleWrapper innerRef={myToggle => (this.myToggle = myToggle)} />
+        <hr />
+        <MyEventComponentWrapper event="onClick" on={e => alert(e.type)} />
+      </Toggle>
+    )
+  }
+}
 
 export default App

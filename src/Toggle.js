@@ -52,9 +52,9 @@ class Toggle extends Component {
 }
 
 export function withToggle(Component) {
-  const Wrapper = (props, context) => {
+  const Wrapper = ({ innerRef, ...props }, context) => {
     const toggleContext = context[TOGGLE_CONTEXT]
-    return <Component {...props} toggle={toggleContext} />
+    return <Component {...props} ref={innerRef} toggle={toggleContext} />
   }
 
   Wrapper.contextTypes = {
