@@ -1,9 +1,14 @@
 import React from "react"
 import Toggle, { withToggle } from "./Toggle"
 
-const MyToggle = withToggle(({ on, toggle }) => (
+const MyToggle = withToggle(({ toggle: { on, toggle } }) => (
   <button onClick={toggle}>{on ? "on" : "off"}</button>
 ))
+
+const MyEventComponent = withToggle(({ toggle, on, event }) => {
+  const props = { [event]: on }
+  return toggle.on ? <button {...props}>The {event} event</button> : null
+})
 
 const App = () => (
   <Toggle onToggle={on => console.log("toggle", on)}>
@@ -12,6 +17,8 @@ const App = () => (
     <Toggle.Button />
     <hr />
     <MyToggle />
+    <hr />
+    <MyEventComponent event="onClick" on={e => alert(e.type)} />
   </Toggle>
 )
 
