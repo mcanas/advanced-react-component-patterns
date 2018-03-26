@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
+import hoistNonReactStatic from "hoist-non-react-statics"
 import Switch from "./Switch"
 
 const TOGGLE_CONTEXT = "__toggle__"
@@ -65,7 +66,7 @@ export function withToggle(Component) {
 
   Wrapper.WrappedComponent = Component
 
-  return Wrapper
+  return hoistNonReactStatic(Wrapper, Component)
 }
 
 export default Toggle
