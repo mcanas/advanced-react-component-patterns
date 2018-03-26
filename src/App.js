@@ -1,8 +1,6 @@
 import React, { Component } from "react"
 import Toggle, { withToggle } from "./Toggle"
-import MyToggle from "./MyToggle"
-
-const MyToggleWrapper = withToggle(MyToggle)
+import MyToggleWrapper from "./MyToggleWrapper"
 
 const MyEventComponent = ({ toggle, on, event }) => {
   const props = { [event]: on }
