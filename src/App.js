@@ -1,27 +1,20 @@
-import React, { Component } from "react"
-import Toggle, { withToggle } from "./Toggle"
-import MyToggleWrapper from "./MyToggleWrapper"
+import React from "react"
+import MyToggle from "./MyToggle"
+import Switch from "./Switch"
+import Toggle from "./Toggle"
 
-const MyEventComponent = ({ toggle, on, event }) => {
-  const props = { [event]: on }
-  return toggle.on ? <button {...props}>The {event} event</button> : null
-}
-const MyEventComponentWrapper = withToggle(MyEventComponent)
-
-class App extends Component {
-  render() {
-    return (
-      <Toggle onToggle={on => (on ? this.myToggle.focus() : null)}>
-        <Toggle.On>The button is on</Toggle.On>
-        <Toggle.Off>The button is off</Toggle.Off>
-        <Toggle.Button />
+const App = () => (
+  <Toggle
+    onToggle={on => console.log("toggle", on)}
+    render={({ on, toggle }) => (
+      <div>
+        {on ? "button is on" : "button is off"}
+        <Switch on={on} onClick={toggle} />
         <hr />
-        <MyToggleWrapper innerRef={myToggle => (this.myToggle = myToggle)} />
-        <hr />
-        <MyEventComponentWrapper event="onClick" on={e => alert(e.type)} />
-      </Toggle>
-    )
-  }
-}
+        <MyToggle on={on} toggle={toggle} />
+      </div>
+    )}
+  />
+)
 
 export default App
